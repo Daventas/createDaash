@@ -3527,7 +3527,8 @@ a.bg-secondary:hover, a.bg-secondary:focus {
 
 a.bg-success:hover, a.bg-success:focus {
   background-color: #129857 !important; }
-
+.bg-cool{
+  background-color: #2a3f54 !important; }
 .bg-info {
   background-color: #00b8d8 !important; }
   .bg-info.card .card-title,
@@ -4108,7 +4109,7 @@ a.text-accent:hover, a.text-accent:focus {
   border-color: #007bff !important; }
 
 .main-navbar .navbar {
-  height: 3.75rem; }
+  height: 3.75rem;}
   .main-navbar .navbar > * {
     display: flex; }
   .main-navbar .navbar .nav-link {
@@ -4149,7 +4150,7 @@ a.text-accent:hover, a.text-accent:focus {
         display: flex;
         padding: 0 5px; }
       .main-navbar .navbar .notifications .dropdown-menu .notification__icon {
-        background-color: #F5F6F8;
+        background-color: #2a3f54;
         box-shadow: 0 0 0 1px white, inset 0 0 3px rgba(0, 0, 0, 0.2);
         width: 2.1875rem;
         height: 2.1875rem;
@@ -4203,7 +4204,8 @@ a.text-accent:hover, a.text-accent:focus {
   top: 0;
   position: fixed;
   height: calc(100vh);
-  background: #fff;
+  background: #2a3f54;
+  color: #ffffff
   z-index: 1070;
   will-change: transform;
   transition: transform 200ms ease-in-out;

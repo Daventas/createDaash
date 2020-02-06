@@ -7,9 +7,9 @@ export default function() {
       htmlAfter: ""
     },
     {
-      title: "통장 내역",
+      title: "통장 잔고 내역",
       htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/botam-list",
+      to: "/acc-balance",
     },
     //{
     //  title: "Blog Posts",
@@ -17,17 +17,17 @@ export default function() {
     //  to: "/blog-posts",
     //},
     {
-      title: "보탐 리포트",
+      title: "보탐/출석 추가",
+      htmlBefore: '<i class="material-icons">note_add</i>',
+      to: "/add-events",
+    },
+    {
+      title: "보탐 현황",
       htmlBefore: '<i class="material-icons">note_add</i>',
       to: "/botam-list",
     },
     {
-      title: "출석 리포트",
-      htmlBefore: '<i class="material-icons">note_add</i>',
-      to: "/item-list",
-    },
-    {
-      title: "아이템 현황",
+      title: "획득 아이템 현황",
       htmlBefore: '<i class="material-icons">note_add</i>',
       to: "/item-list",
     },

@@ -14,7 +14,9 @@ import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import BotamList from "./views/BotamList";
 import ItemList from "./views/ItemList";
-import AccountList from "./views/AccountList";
+import AddEvents from "./views/AddEvents";
+import AccBalance from "./views/AccBalance";
+
 
 export default [
   {
@@ -22,6 +24,16 @@ export default [
     exact: true,
     layout: DefaultLayout,
     component: () => <Redirect to="/blog-overview" />
+  },
+  {
+    path: "/acc-balance",
+    layout: DefaultLayout,
+    component: AccBalance
+  },
+  {
+    path: "/add-events",
+    layout: DefaultLayout,
+    component: AddEvents
   },
   {
     path: "/blog-overview",

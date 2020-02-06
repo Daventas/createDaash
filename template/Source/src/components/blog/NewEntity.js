@@ -24,6 +24,8 @@ import  moment  from 'moment';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import MaterialTable from "../../components/material-table/materialTable"
+import { connect } from 'react-redux';
+import { createBotam} from "../../store/actions/botamActions"
 //import { DatePicker } from 'material-ui-pickers/DatePicker';
 
 
@@ -59,7 +61,11 @@ class NewEntity extends Component {
     handleDateChange = (date) => {
         this.setState({ selectedDate: date });
     };
- 
+    
+    handleBotamSumbit = (e) => {
+        e.preventDefault();
+        this.props.createBotam(this.state)
+    }
     
     render() {
 
@@ -98,7 +104,7 @@ class NewEntity extends Component {
                  <Card small className="h-100">
                     {/* Card Header */}
                     <CardHeader className="border-bottom">
-                    <h6 className="m-0">판매 아이템 업데이트</h6>
+                    <h6 className="m-0">신규 보탐 및 전리품 기입</h6>
                     </CardHeader>
                     <CardBody className="d-flex flex-column">
                         <Form>
@@ -206,47 +212,104 @@ class NewEntity extends Component {
                             </Col>
                         </Row>
 
-                        <Button type="submit">입력 완료</Button>
+                        <Button type="submit" onClick={this.handleBotamSumbit}>입력 완료</Button>
                         </Form>
                     </CardBody>
                     </Card>
                 </TabContainer>
 
                 <TabContainer>
-                    <Card small className="h-100">
+                 <Card small className="h-100">
                     {/* Card Header */}
                     <CardHeader className="border-bottom">
-                    <h6 className="m-0">판매 아이템 업데이트</h6>
+                    <h6 className="m-0">이벤트 출석 기입</h6>
                     </CardHeader>
                     <CardBody className="d-flex flex-column">
-                    <MaterialTable 
-                        title="Demo Title"
-                        columns={[
-                            { title: "날짜", field: "soldDate" },
-                            { title: "보스", field: "dropBoss" },
-                            { title: "아이템", field: "soldItem" },
-                            { title: "판매자", field: "seller"},
-                            { title: "판매금액", field:"soldPrice"}
-                            //{
-                            //  title: "Doğum Yeri",
-                            //  field: "birthCity",
-                            //  lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
-                        //
-                        ]}
-                        data={[
-                            { dasoldDatete: "07/10/2019", dropBoss:"카파", soldItem: "희귀", seller: "아툰해커", soldPrice: null},
-                            { dasoldDatete: "07/10/2019", dropBoss:"시어", soldItem: "영비", seller: "아툰해커", soldPrice: null},
-                            { dasoldDatete: "07/10/2019", dropBoss:"고룡", soldItem: "축젤", seller: "아툰해커", soldPrice: null},
-                            { dasoldDatete: "07/10/2019", dropBoss:"머미", soldItem: "축데이", seller: "아툰해커", soldPrice: null},
-                            { dasoldDatete: "07/10/2019", dropBoss:"우그", soldItem: "저데이", seller: "아툰해커", soldPrice: null},
-                        ]}
-                        
-                        
-                    
-                    
-                    />
-                    );
-                    }
+                        <Form>
+                        <Row form>
+                            <Col md="4" className="form-group">
+                                <label htmlFor="theEventDate">날짜</label>
+                            </Col>
+                            <Col md="8">
+                                <DatePicker
+                                    id = "theEventDate"
+                                    selected={this.state.currentDate}
+                                    value={this.state.selectedDate}
+                                    onChange={date => this.setState({currentDate: date})}
+                                    popperModifiers={{
+                                        flip:{
+                                            behavior: ['bottom']
+                                        }
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col md="4" className="form-group">
+                            <label htmlFor="theEvent">이벤트 </label>
+                            
+                            </Col>
+                            <Col md="8">
+                            <Select 
+                                className="basic-single"
+                                classNamePrefix="이벤트 목록"
+                                id="theEvent"
+                                options={[
+                                        {value : "화염의데스", label:"화염의데스"},
+                                        {value : "데몬", label:"데몬"},
+                                        {value : "잊혀진섬", label:"잊혀진섬"},
+                                        {value : "격돌의탑", label:"격돌의탑"},
+                                ]}
+                                isSearchable={true}
+                            >
+                            </Select>
+                            
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col md="4" className="form-group">
+                                <label htmlFor="theEventChecker">출석 확인자</label>
+                            </Col>
+                            <Col md="8">
+                                <Select 
+                                    className="basic-single"
+                                    classNamePrefix="획득 혈원"
+                                    id="theEventChecker"
+                                    options={[
+                                            {value : "아툰정석", label:"아툰정석"},
+                                            {value : "아툰상큼", label:"아툰상큼"},
+                                            {value : "아툰해커", label:"아툰해커"},
+                                            {value : "아툰단신", label:"아툰단신"},
+                                    ]}
+                                    isSearchable={true}
+                                >
+                            </Select>
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col md="4" className="form-group">
+                                <label htmlFor="theEventMember">참여 인원</label>
+                            </Col>
+                            <Col md="8">
+                                <Select 
+                                    className="basic-single"
+                                    classNamePrefix="총 참여인 등록"
+                                    id="theEventMember"
+                                    options={[
+                                            {value : "아툰해커", label:"아툰해커"},
+                                            {value : "아툰정석", label:"아툰정석"},
+                                            {value : "아툰상큼", label:"아툰상큼"},
+                                            {value : "아툰단신", label:"아툰단신"}
+                                    ]}
+                                    isSearchable={true}
+                                    isMulti
+                                >
+                            </Select>
+                            </Col>
+                        </Row>
+
+                        <Button type="submit">출석 생성</Button>
+                        </Form>
                     </CardBody>
                     </Card>
                 </TabContainer>
@@ -257,4 +320,11 @@ class NewEntity extends Component {
 
         )}};
   
-export default NewEntity;
+const mapDispatchToProps = (dispatch) => {
+    return {
+                createBotam: (botam) => dispatch(createBotam(botam))
+            }
+        } 
+        
+export default connect(null,mapDispatchToProps)(NewEntity);
+
