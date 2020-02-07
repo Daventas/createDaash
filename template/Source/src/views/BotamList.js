@@ -1,14 +1,16 @@
-import React, {component} from "react";
+import React, { Component } from "react";
 import { Container, Row, Col } from "shards-react";
-
 import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
 import SidebarActions from "../components/add-new-post/SidebarActions";
 import SidebarCategories from "../components/add-new-post/SidebarCategories";
 import MaterialTable from "../components/material-table/materialTable"
+import {connect} from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
 
-class BotamList extends React.Component {
+class BotamList extends Component {
 
     render() {
 
@@ -70,4 +72,16 @@ class BotamList extends React.Component {
 
 }
 
-export default BotamList;
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    botam : state.botam
+  }
+}
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'botams' } 
+  ])
+)(BotamList)

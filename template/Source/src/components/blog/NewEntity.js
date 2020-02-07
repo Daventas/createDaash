@@ -1,6 +1,4 @@
 import React, { Component, PureComponent, useState} from 'react';
-import ReactDOM from "react-dom";
-import PropTypes from "prop-types";
 import {
   Row,
   Col,
@@ -8,11 +6,6 @@ import {
   CardHeader,
   CardBody,
   Form,
-  FormGroup,
-  FormInput,
-  FormTextarea,
-  FormCheckbox,
-  FormSelect,
   Button
 } from "shards-react";
 import SwipeableViews from 'react-swipeable-views';
@@ -23,9 +16,9 @@ import Typography from '@material-ui/core/Typography';
 import  moment  from 'moment';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
-import MaterialTable from "../../components/material-table/materialTable"
 import { connect } from 'react-redux';
 import { createBotam} from "../../store/actions/botamActions"
+
 //import { DatePicker } from 'material-ui-pickers/DatePicker';
 
 
@@ -37,24 +30,30 @@ function TabContainer({ children }) {
     );
 }
 
-
 class NewEntity extends Component {
 
   
     state = {
         activeIndex : 0,
         currentDate: new Date(),
-        selectedDate: new Date()
-        
+        selectedDate: new Date(),
+        botamBoss: "선택/검색",
+        botamPicker: "",
+        botamMember: "",
+        botamItem: ""
     }
 
-    
+    handleChange = (e) => {
+        this.setState({
+            [e.target.id] : e.target.value
+        })
+    }
 
     handleChangeIndex(index) {
         this.setState({ activeIndex: index });
     }
 
-    handleChange(event, value) {
+    handleChangeValue(event, value) {
         this.setState({ activeIndex: value });
     }
 
@@ -86,7 +85,7 @@ class NewEntity extends Component {
             <AppBar position="static" color="default">
             <Tabs
                 value={this.state.activeIndex}
-                onChange={(e, value) => this.handleChange(e, value)}
+                onChange={(e, value) => this.handleChangeValue(e, value)}
                 indicatorColor="primary"
                 textColor="primary"
                 variant="fullWidth"
@@ -128,14 +127,16 @@ class NewEntity extends Component {
                         </Row>
                         <Row form>
                             <Col md="4" className="form-group">
-                            <label htmlFor="feInputAddress">보스</label>
+                            <label htmlFor="botamBoss">보스</label>
                             
                             </Col>
                             <Col md="8">
                             <Select 
                                 className="basic-single"
                                 classNamePrefix="보스 이름"
-                                id="feInputAddress"
+                                value={this.state.botamBoss}
+                                onChange={boss => this.setState({botamBoss:boss})}
+                                id="botamBoss"
                                 options={[
                                         {value : "리치", label:"리치"},
                                         {value : "우그", label:"우그"},
@@ -150,13 +151,15 @@ class NewEntity extends Component {
                         </Row>
                         <Row form>
                             <Col md="4" className="form-group">
-                                <label htmlFor="feEmailAddress">루팅자</label>
+                                <label htmlFor="botamPicker">루팅자</label>
                             </Col>
                             <Col md="8">
                                 <Select 
                                     className="basic-single"
                                     classNamePrefix="획득 혈원"
-                                    id="feInputAddress"
+                                    value={this.state.botamPicker}
+                                    onChange={picker => this.setState({botamPicker:picker})}
+                                    id="botamPicker"
                                     options={[
                                             {value : "아툰정석", label:"아툰정석"},
                                             {value : "아툰상큼", label:"아툰상큼"},
@@ -171,13 +174,15 @@ class NewEntity extends Component {
                         
                         <Row form>
                             <Col md="4" className="form-group">
-                                <label htmlFor="feEmailAddress">획득 아이템</label>
+                                <label htmlFor="botamItem">획득 아이템</label>
                             </Col>
                             <Col md="8">
                                 <Select 
                                     className="basic-single"
                                     classNamePrefix="아이템 목록"
-                                    id="feInputAddress"
+                                    value={this.state.botamItem}
+                                    onChange={item => this.setState({botamItem:item})}
+                                    id="botamItem"
                                     options={[
                                             {value : "축젤", label:"축젤"},
                                             {value : "축데이", label:"축데이"},
@@ -192,13 +197,15 @@ class NewEntity extends Component {
                         </Row>
                         <Row form>
                             <Col md="4" className="form-group">
-                                <label htmlFor="feEmailAddress">참여 인원</label>
+                                <label htmlFor="botamMember">참여 인원</label>
                             </Col>
                             <Col md="8">
                                 <Select 
                                     className="basic-single"
                                     classNamePrefix="총 참여인 등록"
-                                    id="feInputAddress"
+                                    value={this.state.botamMember}
+                                    onChange={member => this.setState({botamMember:member})}
+                                    id="botamMember"
                                     options={[
                                             {value : "아툰해커", label:"아툰해커"},
                                             {value : "아툰정석", label:"아툰정석"},
@@ -319,7 +326,7 @@ class NewEntity extends Component {
             </div>
 
         )}};
-  
+
 const mapDispatchToProps = (dispatch) => {
     return {
                 createBotam: (botam) => dispatch(createBotam(botam))
