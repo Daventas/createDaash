@@ -16,6 +16,7 @@ import BotamList from "./views/BotamList";
 import ItemList from "./views/ItemList";
 import AddEvents from "./views/AddEvents";
 import AccBalance from "./views/AccBalance";
+import UserManagement from "./views/UserManagement";
 
 
 export default [
@@ -79,5 +80,11 @@ export default [
     path: "/blog-posts",
     layout: DefaultLayout,
     component: BlogPosts
-  }
+  },
+  {
+    path: "/user-management",
+    layout: DefaultLayout,
+    component: UserManagement
+  },
+  
 ];

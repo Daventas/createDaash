@@ -23,23 +23,23 @@ export default function (props) {
         }
       editable={{
         onRowAdd: newData =>
-          new Promise(resolve => {
+        new Promise((resolve, reject) => {
             setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
+                {
+                    const data = props.data
+                    data.push(newData);
+                    setState({ data }, () => resolve()); 
+                }
+                resolve();
+            }, 1000);
+        }),
         onRowUpdate: (newData, oldData) =>
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
               if (oldData) {
                 setState(prevState => {
-                  const data = [...prevState.data];
+                  const data = [...props.data];
                   data[data.indexOf(oldData)] = newData;
                   return { ...prevState, data };
                 });

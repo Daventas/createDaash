@@ -40,7 +40,7 @@ export default function() {
     {
       title: "혈원 관리 및 추가",
       htmlBefore: '<i class="material-icons">view_module</i>',
-      to: "/components-overview",
+      to: "/user-management",
     },
 
     {
