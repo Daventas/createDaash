@@ -6,13 +6,39 @@ import MaterialTable from "../components/material-table/materialTable"
 import { connect } from 'react-redux'
 import { compose} from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
+import firebase from '../config/fbconfig'
 
 
 
 class UserManagement extends React.Component {
 
-    render() {
+  state = {
+    userList : []
+  }
 
+  componentDidMount(){
+    const db = firebase.firestore();
+    var turmarkers =[];
+
+    db.collection("users").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {        
+            turmarkers.push(doc.data())
+        });
+        this.setState({
+          userList:turmarkers.map((item)=> ({
+            guildName: item.guildName,
+            playerId: item.playerId,
+            playerClass: item.playerClass,
+            playerName: item.playerName,
+            playerAge: item.playerAge,
+            playerContact: item.playerContact
+            }))
+        });
+    });    
+  }
+
+  render() {
+  
         return(
       
  <div>
@@ -26,7 +52,7 @@ class UserManagement extends React.Component {
       {/* Editor */}
       <Col lg="9" md="12">
         <MaterialTable 
-            title="Demo Title"
+            title="user"
              columns={[
                 { title: "소속", field: "guildName" },
                 { title: "아이디", field: "playerId" },
@@ -40,13 +66,7 @@ class UserManagement extends React.Component {
                 //  lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
                //
              ]}
-              data={[
-                { guildName: "새벽", playerId: "아툰정석", playerClass: "법사", playerName: "김남석", playerAge: "34", playerContact: "010 3843 9932"},
-                { guildName: "새벽", playerId: "아툰상큼", playerClass: "암기", playerName: "", playerAge: "34", playerContact: "010 3843 9932"},
-                { guildName: "새벽", playerId: "아툰해커", playerClass: "법사", playerName: "매튜송", playerAge: "34", playerContact: "010 3843 9932"},
-                { guildName: "저승", playerId: "아툰챈이", playerClass: "신검", playerName: "", playerAge: "34", playerContact: "010 3843 9932"},
-                { guildName: "저승", playerId: "아툰조아", playerClass: "신검", playerName: "", playerAge: "34", playerContact: "010 3843 9932"},
-              ]}
+              data={this.state.userList}
               options={{
                 headerStyle:{fontSize:"5"},
                 rowStyle: {

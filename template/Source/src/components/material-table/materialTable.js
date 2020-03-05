@@ -4,10 +4,21 @@ import { connect } from 'react-redux';
 import { createUser} from "../../store/actions/userActions"
 import { createBotam} from "../../store/actions/botamActions"
 
+function getRandomInt (min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min)
+}
 
 class MaterialTables extends Component {
   
+  state = {
+    ranKey : 1
+  }
+
   render(){
+    const requestType = this.props.title
+    console.log(requestType)
 
   return (
     <MaterialTable
@@ -22,11 +33,18 @@ class MaterialTables extends Component {
         new Promise((resolve, reject) => {
             setTimeout(() => {
                 {
-                  this.props.createUser(newData) 
-                  console.log(newData)
+                  const data = this.state.data
+                  if(requestType === 'botam')
+                    this.props.createBotam(newData) 
+                  else if (requestType === 'user')
+                    this.props.createUser(newData)
+                    
                 }
+                
                 resolve();
             }, 1000);
+            
+           
         }),
         onRowUpdate: (newData, oldData) =>
           new Promise(resolve => {
