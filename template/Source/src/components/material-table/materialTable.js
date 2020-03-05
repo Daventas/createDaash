@@ -1,34 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MaterialTable from 'material-table';
+import { connect } from 'react-redux';
+import { createUser} from "../../store/actions/userActions"
+import { createBotam} from "../../store/actions/botamActions"
 
-export default function (props) {
+
+class MaterialTables extends Component {
   
-      
-
-    const [state, setState] = React.useState({
-    ...props.columns,
-    ...props.data,
-    ...props.options
-  });
-
-
+  render(){
 
   return (
     <MaterialTable
       title=""
-      columns={props.columns}
-      data={props.data}
+      columns={this.props.columns}
+      data={this.props.data}
       options={
-        props.options
+        this.props.options
         }
       editable={{
         onRowAdd: newData =>
         new Promise((resolve, reject) => {
             setTimeout(() => {
                 {
-                    const data = props.data
-                    data.push(newData);
-                    setState({ data }, () => resolve()); 
+                  this.props.createUser(newData) 
+                  console.log(newData)
                 }
                 resolve();
             }, 1000);
@@ -38,8 +33,8 @@ export default function (props) {
             setTimeout(() => {
               resolve();
               if (oldData) {
-                setState(prevState => {
-                  const data = [...props.data];
+                this.setState(prevState => {
+                  const data = [...this.props.data];
                   data[data.indexOf(oldData)] = newData;
                   return { ...prevState, data };
                 });
@@ -50,7 +45,7 @@ export default function (props) {
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
-              setState(prevState => {
+              this.setState(prevState => {
                 const data = [...prevState.data];
                 data.splice(data.indexOf(oldData), 1);
                 return { ...prevState, data };
@@ -61,4 +56,14 @@ export default function (props) {
       
     />
   );
+  }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+              createBotam: (botam) => dispatch(createBotam(botam)),
+              createUser: (user) => dispatch(createUser(user))
+          }
+      } 
+      
+export default connect(null,mapDispatchToProps)(MaterialTables);

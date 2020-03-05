@@ -1,9 +1,12 @@
-import React, {component} from "react";
+import React from "react";
 import { Container, Row, Col } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
 import MaterialTable from "../components/material-table/materialTable"
+import { connect } from 'react-redux'
+import { compose} from 'redux'
+import { firestoreConnect } from 'react-redux-firebase'
+
 
 
 class UserManagement extends React.Component {
@@ -60,4 +63,16 @@ class UserManagement extends React.Component {
 
 }
 
-export default UserManagement;
+const mapStateToProps = (state) => {
+    console.log(state)
+  return {
+
+  }
+}
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'users'}
+  ])
+)(UserManagement);

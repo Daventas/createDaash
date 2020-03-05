@@ -1,12 +1,9 @@
-import React, {component} from "react";
+import React from "react";
 import { Container, Row, Col } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
-import SidebarActions from "../components/add-new-post/SidebarActions";
-import SideAddCredit from "../components/add-new-transaction/side-add-credit"
-import SidebarCategories from "../components/add-new-post/SidebarCategories";
-import MaterialTable from "../components/material-table/materialTable"
+import SideAddCredit from "../components/add-new-transaction/side-add-credit";
+import MaterialTable from "../components/material-table/materialTable";
 
 
 class AccBalance extends React.Component {

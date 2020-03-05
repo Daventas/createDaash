@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
 import SidebarActions from "../components/add-new-post/SidebarActions";
 import SidebarCategories from "../components/add-new-post/SidebarCategories";
-import MaterialTable from "../components/material-table/materialTable"
 import Typography from '@material-ui/core/Typography';
 import MUIDataTable from "mui-datatables";
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 function TabContainer({ children }) {
     return (
@@ -21,12 +19,6 @@ function TabContainer({ children }) {
         </Typography>
     );
 }
-
-const tabStyle = {
-    backgroundColor : "black"
-
-}
-
 
 class ItemList extends Component {
 

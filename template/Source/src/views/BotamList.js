@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "shards-react";
 import PageTitle from "../components/common/PageTitle";
-import Editor from "../components/add-new-post/Editor";
 import SidebarActions from "../components/add-new-post/SidebarActions";
 import SidebarCategories from "../components/add-new-post/SidebarCategories";
 import MaterialTable from "../components/material-table/materialTable"
@@ -10,10 +9,20 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 
 
+
 class BotamList extends Component {
+  state = {
+    concon : []
+  }
 
+ 
     render() {
+      const myObject = this.props.dodo
 
+      
+      
+      //this.setState({godState : gotData})
+      //console.log(dodo.id)
         return(
       
  <div>
@@ -72,10 +81,11 @@ class BotamList extends Component {
 
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   console.log(state)
   return {
-    botam : state.botam
+    dodo : state.firestore.ordered.botams
+    
   }
 }
 
@@ -83,5 +93,5 @@ export default compose(
   connect(mapStateToProps),
   firestoreConnect([
     { collection: 'botams' } 
-  ])
+  ]),
 )(BotamList)

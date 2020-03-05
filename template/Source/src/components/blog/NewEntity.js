@@ -1,4 +1,4 @@
-import React, { Component, PureComponent, useState} from 'react';
+import React, { Component } from 'react';
 import {
   Row,
   Col,
@@ -13,7 +13,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import  moment  from 'moment';
 import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { connect } from 'react-redux';
@@ -63,7 +62,22 @@ class NewEntity extends Component {
     
     handleBotamSumbit = (e) => {
         e.preventDefault();
-        this.props.createBotam(this.state)
+        const botamData = {
+            botamBoss : this.state.botamBoss.value,
+            botamItem : this.state.botamItem.map((item, i) => {
+                            return (
+                                item.value
+                            )
+                        }),
+            botamPicker : this.state.botamPicker.value,
+            botamMember : this.state.botamMember.map((item, i) => {
+                            return (
+                                item.value
+                            )
+                        }),
+        }
+        console.log(botamData)
+        this.props.createBotam(botamData)
     }
     
     render() {
