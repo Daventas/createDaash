@@ -76,7 +76,6 @@ class NewEntity extends Component {
                             )
                         }),
         }
-        console.log(botamData)
         this.props.createBotam(botamData)
     }
     

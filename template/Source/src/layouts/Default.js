@@ -5,8 +5,12 @@ import { Container, Row, Col } from "shards-react";
 import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
 import MainFooter from "../components/layout/MainFooter";
+import { connect } from "react-redux"
 
-const DefaultLayout = ({ children, noNavbar, noFooter }) => (
+
+
+const DefaultLayout = ({ children, noNavbar, noFooter}) => (
+ 
   <Container fluid>
     <Row>
       <MainSidebar />
@@ -23,6 +27,8 @@ const DefaultLayout = ({ children, noNavbar, noFooter }) => (
       </Col>
     </Row>
   </Container>
+ 
+  
 );
 
 DefaultLayout.propTypes = {
@@ -41,4 +47,10 @@ DefaultLayout.defaultProps = {
   noFooter: false
 };
 
-export default DefaultLayout;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth
+  }
+}
+
+export default connect(mapStateToProps)(DefaultLayout);

@@ -12,9 +12,14 @@ import firebase from '../config/fbconfig'
 
 
 class BotamList extends Component {
-  state = {
-    concon : []
+
+  constructor(props) {
+    super(props)
+      this.state = {
+        concon: []
+      }
   }
+ 
   componentDidMount(){
         const db = firebase.firestore();
         var turmarkers =[];
@@ -38,7 +43,13 @@ class BotamList extends Component {
   render() {
       
         const callcall = this.state.concon
-
+        const gethis = this.props.dodo
+        const lalal = gethis && gethis.map(item => ({
+          boss : item.botamBoss
+          
+        }))
+        console.log(lalal)
+       
         return(
       
             <div>

@@ -7,15 +7,22 @@ import { connect } from 'react-redux'
 import { compose} from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import firebase from '../config/fbconfig'
+import botamReducer from "../store/reducers/botamReducer";
 
 
 
 class UserManagement extends React.Component {
 
   state = {
-    userList : []
+    userList : [],
+    userLista :[],
+    message : ""
   }
 
+  callbackMsg = (child) => {
+    this.setState({message:child})
+  }
+  /*
   componentDidMount(){
     const db = firebase.firestore();
     var turmarkers =[];
@@ -36,9 +43,20 @@ class UserManagement extends React.Component {
         });
     });    
   }
+  */
 
   render() {
+    const getData = this.props.users
+    let newData = getData && getData.map(item => ({
+        guildName: item.guildName,
+            playerId: item.playerId,
+            playerClass: item.playerClass,
+            playerName: item.playerName,
+            playerAge: item.playerAge,
+            playerContact: item.playerContact
+    }))
   
+    console.log(newData)
         return(
       
  <div>
@@ -66,7 +84,7 @@ class UserManagement extends React.Component {
                 //  lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
                //
              ]}
-              data={this.state.userList}
+              data={newData}
               options={{
                 headerStyle:{fontSize:"5"},
                 rowStyle: {
@@ -74,6 +92,7 @@ class UserManagement extends React.Component {
                     fontSize:'24'
                   }
                 }}
+              parentCallback = {this.callbackMsg}
         />
       </Col>
     </Row>
@@ -86,7 +105,7 @@ class UserManagement extends React.Component {
 const mapStateToProps = (state) => {
     console.log(state)
   return {
-
+    users : state.firestore.ordered.users
   }
 }
 

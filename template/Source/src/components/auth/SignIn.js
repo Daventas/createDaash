@@ -11,7 +11,11 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
+import { signIn } from '../../store/actions/authActions'
 import { makeStyles } from '@material-ui/core/styles';
+import { compose } from 'redux'
 
 function Copyright() {
   return (
@@ -26,7 +30,7 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     height: '100vh',
   },
@@ -56,24 +60,45 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
     backgroundColor: '#2a3f54'
   },
-}));
+});
 
-export default function SignInSide() {
-  const classes = useStyles();
 
+
+class SignIn extends React.Component {
+
+  state = {
+    email: '',
+    password: ''
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+  
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.signIn(this.state)
+    console.log(this.state)
+  }
+
+  
+  render() {
+    const { authError } = this.props
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component="main" className="SignIn-root-1">
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={false} sm={4} md={7} className="SignIn-image-2" />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
+        <div className="SignIn-paper-3">
+          <Avatar className="SignIn-avatar-4">
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form}>
+          <form className="SignIn-form-5" onSubmit={this.handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -85,6 +110,7 @@ export default function SignInSide() {
               type="email"
               autoComplete="email"
               autoFocus
+              onChange={this.handleChange}
             />
             <TextField
               variant="outlined"
@@ -96,6 +122,7 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={this.handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -106,10 +133,14 @@ export default function SignInSide() {
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              className="SignIn-submit-6"
             >
               로그인
             </Button>
+            <div style={{color:"red",fontAlign:"center"}}>
+              { authError ? <p>{authError}</p> : null}
+
+            </div>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -130,4 +161,20 @@ export default function SignInSide() {
       </Grid>
     </Grid>
   );
+  }
 }
+
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    authError: state.auth.authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signIn: (creds) => dispatch (signIn(creds))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(SignIn))

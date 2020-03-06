@@ -46,11 +46,13 @@ export default [
     layout: DefaultLayout,
     component: UserProfileLite
   },
+  /*
   {
     path: "/botam-list",
     layout: DefaultLayout,
     component: BotamList
   },
+  */
   {
     path: "/item-list",
     layout: DefaultLayout,
